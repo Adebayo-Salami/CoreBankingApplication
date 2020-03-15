@@ -180,7 +180,7 @@ namespace CoreBankingApplication.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(AccIndexer model)
         {
-            var psd = "bestmumever";
+            var psd = "put your password here";
             if (ModelState.IsValid)
             {
                 var glCategory = _content.acctIndex.SingleOrDefault(m => m.id == 20);
