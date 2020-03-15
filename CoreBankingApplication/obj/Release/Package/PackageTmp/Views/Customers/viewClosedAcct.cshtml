@@ -1,0 +1,90 @@
+﻿@model CoreBankingApplication.Core.Models.CloseAcct
+
+@{
+    ViewBag.Title = "viewClosedAcct";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Closed Account Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.customerAccountNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerAccountNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customerAccountType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerAccountType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.accountName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.accountName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.accountBalance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.accountBalance)
+            @Html.DisplayFor(model => model.balanceStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.branchCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.branchCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.interestRate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.interestRate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lien)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lien)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cot)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

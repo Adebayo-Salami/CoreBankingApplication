@@ -1,0 +1,133 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "viewBS";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:center">Phoenix Bank Balance Sheet as at @DateTime.Now.DayOfWeek/@DateTime.Now.Month/@DateTime.Now.Year</h2>
+<br />
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td></td>
+            <td>Naira</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>ASSETS</b></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.AccountT)
+        {
+            if (item.mainGLCategory == 1)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.amountInAcct)</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td>Cash-at-Bank</td>
+            <td>@Model.capitalBal</td>
+        </tr>
+        <tr>
+            <td><b>TOTAL ASSETS:</b></td>
+            <td><b>@Model.assetB</b></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>LIABILITIES</b></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.AccountT)
+        {
+            if (item.mainGLCategory == 2)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.amountInAcct)</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td>Interest Payable</td>
+            <td>@Model.interestPay</td>
+        </tr>
+        <tr>
+            <td><b>TOTAL LIABILITIES:</b></td>
+            <td><b>@Model.liabilityB</b></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><b>___________________________________</b></td>
+        </tr>
+        @if (Model.netAsset == -1)
+        {
+            <tr>
+                <td><b>NET ASSETS:</b></td>
+                <td>(<b>@Model.netMinusAsset</b>)</td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td><b>NET ASSETS:</b></td>
+                <td><b>@Model.netAsset</b></td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>EQUITY</b></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.AccountT)
+        {
+            if (item.mainGLCategory == 3)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.amountInAcct)</td>
+                </tr>
+            }
+        }
+        @if (Model.netBal == -1)
+        {
+            <tr>
+                <td>Net income</td>
+                <td>( @Model.netMinusBal )</td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td>Net income</td>
+                <td> @Model.netBal</td>
+            </tr>
+        }
+        <tr>
+            <td></td>
+            <td><b>___________________________________</b></td>
+        </tr>
+        <tr>
+            <td><b>TOTAL CAPITAL:</b></td>
+            <td><b>@Model.incBal</b></td>
+        </tr>
+    </tbody>
+</table>

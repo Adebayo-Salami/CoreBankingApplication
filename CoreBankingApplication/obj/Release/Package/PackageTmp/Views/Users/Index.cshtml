@@ -1,0 +1,94 @@
+﻿@*@model IEnumerable<CoreBankingApplication.Core.Models.ApplicationUser>*@
+@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Error"] != null)
+{
+    <span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h1>List of Users</h1>
+
+<br />
+
+<table id="user" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Branch</td>
+            <td>Full Name</td>
+            <td>Email</td>
+            <td>Home Address</td>
+            <td>Phone Number</td>
+            <td>Username</td>
+            <td>User Roles</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.userT)
+        {
+            if (item.Id != "f6842987-eff6-4129-bebe-c2ab2d241baa")
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Branch)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.fullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.homeAddress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.role)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit Profile", "editU", new { id = item.Id }) |
+                        @Html.ActionLink("Assign Till ", "assignT")|
+                        <button data-student-id="@item.Id" class="btn btn-link js-delete">Delete Account</button>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#user").DataTable();
+            
+            $("#user .js-delete").on("click", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this user account?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/users/" + button.attr("data-student-id"),
+                            method: "Delete",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            })
+
+        });
+    </script>
+}

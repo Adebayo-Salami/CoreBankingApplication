@@ -1,0 +1,99 @@
+﻿@model IEnumerable<CoreBankingApplication.Core.Models.ApplicationUser>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2>Tellers</h2>
+
+<p>
+    @Html.ActionLink("Create New Teller Account", "Register", "Account")
+</p>
+@if (!Model.Any())
+{
+    <p>No Tellers Yet!</p>
+}
+else
+{
+    <table id="tellers" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.Branch)</td>
+                <td>@Html.DisplayNameFor(model => model.fullName)</td>
+                <td>@Html.DisplayNameFor(model => model.Email)</td>
+                <td>@Html.DisplayNameFor(model => model.UserName)</td>
+                <td>@Html.DisplayNameFor(model => model.PhoneNumber)</td>
+                <td>@Html.DisplayNameFor(model => model.tillAccount)</td>
+                <td>@Html.DisplayNameFor(model => model.homeAddress)</td>
+                <td>Available Operations</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                if (item.role == "Teller")
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Branch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.fullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.tillAccount)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.homeAddress)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit", "Edit", new { id = item.tillAccount }) |
+                            @Html.ActionLink("Till Detail", "Details", new { id = item.tillAccount }) |
+                            <button data-student-id="@item.tillAccount" class="btn btn-link js-delete">Delete</button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>          
+    </table>
+}
+
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#tellers").DataTable();
+
+            $("#tellers .js-delete").on("click", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this teller account?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/tellers/" + button.attr("data-student-id"),
+                            method: "Delete",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            })
+
+        });
+    </script>
+}

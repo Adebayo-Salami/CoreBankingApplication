@@ -1,0 +1,63 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "assignAccount";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Error"] != null)
+{
+    <span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+<h2>Assign New Account to Customer Profile</h2>
+
+@using (Html.BeginForm("CreateAccount", "Customers"))
+{
+    @Html.ValidationSummary(true, "Pls ensure you fill in correct details.")
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CustomerAccounts.CustomerID)
+        @Html.TextBoxFor(m => m.CustomerAccounts.CustomerID, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerAccounts.CustomerID)
+    </div>
+
+    <div class="form-group">
+    @Html.LabelFor(m => m.CustomerAccounts.customerAccountType)
+    @Html.DropDownListFor(m => m.CustomerAccounts.customerAccountType, new SelectList(Model.selectAccountT, "accountName", "accountName"), "Select an Account Type", new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.CustomerAccounts.customerAccountType)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CustomerAccounts.accountBalance)
+        @Html.TextBoxFor(m => m.CustomerAccounts.accountBalance, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerAccounts.accountBalance)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CustomerAccounts.branchCreated)
+        @Html.DropDownListFor(m => m.CustomerAccounts.branchCreated, new SelectList(Model.branc, "branchName", "branchName"), "Select Branch", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerAccounts.branchCreated)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CustomerAccounts.interestRate)
+        @Html.TextBoxFor(m => m.CustomerAccounts.interestRate, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerAccounts.interestRate)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.CustomerAccounts.lien)
+        @Html.TextBoxFor(m => m.CustomerAccounts.lien, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.CustomerAccounts.lien)
+    </div>
+
+    @Html.HiddenFor(m => m.CustomerAccounts.id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">SAVE</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

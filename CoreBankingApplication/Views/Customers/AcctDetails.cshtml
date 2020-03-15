@@ -1,0 +1,107 @@
+﻿@model CoreBankingApplication.Core.Models.CustomerAccounts
+<div>
+    <h4>CustomerAccounts</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.customerAccountNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerAccountNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.customerAccountType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.customerAccountType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.accountName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.accountName)
+        </dd>
+
+        <dt>
+            Amount in Account
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.accountBalance)
+            @Html.DisplayFor(model => model.balanceStatus)
+        </dd>
+
+        <dt>
+            Interest Rate(%)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.interestRate)%
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.lien)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.lien)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cot)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cot)%
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.months)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.months)
+        </dd>
+            
+        <dt>
+            @Html.DisplayNameFor(model => model.branchCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.branchCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.linkAcctType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.linkAcctType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.linkedAcctNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.linkedAcctNumber)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "CustomerAccounts")
+</p>

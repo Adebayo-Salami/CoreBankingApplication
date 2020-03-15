@@ -1,0 +1,36 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "assignT";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Assign Till Account To Teller</h2>
+
+@using (Html.BeginForm("assignTellerTill", "Users")) 
+{
+    @Html.AntiForgeryToken()
+    <p><b>(NOTE IF DROP DOWN LIST IS EMPTY, THEN NO FREE TILL ACCOUNT EXIST OR ALL USERS ALREADY HAVE TILL ACCOUNT)</b></p>
+    <div class="form-horizontal">
+        <h4>Assign Till</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.AssignTill.profile)
+            @Html.DropDownListFor(m => m.AssignTill.profile, new SelectList(Model.userT, "UserName", "UserName"), "Select Profile Username", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.AssignTill.profile)
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.AssignTill.tillAccount)
+            @Html.DropDownListFor(m => m.AssignTill.tillAccount, new SelectList(Model.tillT, "tellerUsername", "tellerUsername"), "Select Till Account", new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.AssignTill)
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Assign Till" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}

@@ -1,0 +1,76 @@
+﻿@*@model IEnumerable<CoreBankingApplication.Core.Models.AccountIndex>*@
+@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2 style="text-align:center; font-size:xx-large; font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif">Available GL Accounts</h2>
+
+@if (!Model.AccountT.Any())
+{
+    <p>No GL Category Created Yet!</p>
+}
+else
+{
+    <table id="glAcct" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td>GL Account Name</td>
+                <td>GL Account Category</td>
+                <td>GL Account Code</td>
+                <td>GL Account Branch</td>
+                <td>Date Created</td>
+                <td>Available Operations</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.AccountT)
+            {
+                <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.accountName)
+                        </td>
+                        @foreach (var item1 in Model.SubCategoryT)
+                        {
+                            if (item1.id == item.SubCategoryid)
+                            {
+                                <td>
+                                    @item1.categoryName
+                                </td>
+                            }
+                        }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.accountCode)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.accountBranch)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.dateCreated)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Edit GL", "EditAcc", new { id = item.id }) |
+                            @Html.ActionLink("Details", "GLDetails", new { id = item.id })|
+                            @Html.ActionLink("View GL Accounts Postings", "AcctLog", new { id = item.id })                            
+                        </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            $("#glAcct").DataTable();
+
+        });
+    </script>
+}

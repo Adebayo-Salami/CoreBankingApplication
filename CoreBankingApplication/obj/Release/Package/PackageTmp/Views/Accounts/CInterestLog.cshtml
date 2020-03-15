@@ -1,0 +1,89 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "InterestLog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.acctIndexN Log</h2>
+
+
+ @if (!Model.CIlogT.Any())
+  {
+     <p>No Record In Database Yet!</p>
+  }
+  else
+  {
+    <table id="CinterestLog" class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td>Account Entry</td>
+                    <td>Corresponding Entry</td>
+                    <td>Account Code</td>
+                    <td>Amount</td>
+                    <td>Transaction Description</td>
+                    <td>Date of Transaction</td>
+                    <td>Owner Account Number</td>
+                    <td>Owner Account Type</td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.CIlogT)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(modelItem => item.acctEntry)</td>
+                        <td>@Html.DisplayFor(modelItem => item.correspondEntry)</td>
+                        <td>@Html.DisplayFor(modelItem => item.entryAccN)</td>
+                        <td>@Html.DisplayFor(modelItem => item.amt)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Entrydesc)</td>
+                        <td>@Html.DisplayFor(modelItem => item.dateTr)</td>
+                        <td>@Html.DisplayFor(modelItem => item.customerAccNumb)</td>
+                        <td>@Html.DisplayFor(modelItem => item.customerAcctype)</td>
+                        @*<td>
+                            <button data-student-id="@item.id" class="btn btn-link js-delete">Delete</button>
+                        </td>*@
+                    </tr>
+                }   
+                @foreach (var item in Model.postGLT)
+                {
+                    if (item.glReceiving == Model.acctIndexN)
+                    {
+                        <tr>
+                            <td>CREDIT)</td>
+                            <td>@Html.DisplayFor(modelItem => item.glSending)</td>
+                            <td>-</td>
+                            <td>@Html.DisplayFor(modelItem => item.amountCredit)</td>
+                            <td>@Html.DisplayFor(modelItem => item.narration)</td>
+                            <td>@Html.DisplayFor(modelItem => item.dateOfTransaction)</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    }
+                    if (item.glSending == Model.acctIndexN)
+                    {
+                        <tr>
+                            <td>DEBIT</td>
+                            <td>@Html.DisplayFor(modelItem => item.glReceiving)</td>
+                            <td>-</td>
+                            <td>@Html.DisplayFor(modelItem => item.amountCredit)</td>
+                            <td>@Html.DisplayFor(modelItem => item.narration)</td>
+                            <td>@Html.DisplayFor(modelItem => item.dateOfTransaction)</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    }
+                }        
+            </tbody>
+        </table>
+  }
+
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            $("#CinterestLog").DataTable();
+     
+        });
+    </script>
+}

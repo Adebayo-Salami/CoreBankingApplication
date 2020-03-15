@@ -1,0 +1,116 @@
+﻿@using System.Security.Claims;
+@model IEnumerable<CoreBankingApplication.Core.Models.Customer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2>Customer Management</h2>
+
+
+@if (!Model.Any())
+{
+    <p>No Customers Yet!</p>
+}
+else
+{
+    <table id="customer" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.id)</td>
+                <td>@Html.DisplayNameFor(model => model.customerName)</td>
+                <td>@Html.DisplayNameFor(model => model.customerPhone)</td>
+                <td>@Html.DisplayNameFor(model => model.customerGender)</td>
+                <td>@Html.DisplayNameFor(model => model.customerEmail)</td>
+                <td>@Html.DisplayNameFor(model => model.customerLocation)</td>
+                <td>Available Operations</td>
+                @*<td>@Html.DisplayNameFor(model => model.customerNationalId)</td>
+                    <td>@Html.DisplayNameFor(model => model.customerVoterId)</td>
+                    <td>@Html.DisplayNameFor(model => model.customerElectricityId)</td>*@
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.customerName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.customerPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.customerGender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.customerEmail)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.customerLocation)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.customerNationalId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.customerVoterId)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.customerElectricityId)
+                    </td>*@
+                    @if (Session["role"].ToString() == "admin")
+                    {
+                        <td>
+                            @Html.ActionLink("Edit Profile", "EditProfile", new { id = item.id })|
+                            @Html.ActionLink("Assign Account", "profileAssign", new { id = item.id })|
+                            <button data-student-id="@item.id" class="btn btn-link js-delete">Delete</button>
+                        </td>
+                    }
+                    @if (Session["role"].ToString() == "Teller")
+                    {
+                        <td>
+                            @Html.ActionLink("Edit Profile", "EditProfile", new { id = item.id }) |
+                            @Html.ActionLink("Assign Account", "profileAssign", new { id = item.id })
+                        </td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+           var table = $("#customer").DataTable();
+            
+           $("#customer .js-delete").on("click", function () {
+               var button = $(this);
+               bootbox.confirm("Are you sure you want to delete this customer?", function (result) {
+                   if (result) {
+                       bootbox.confirm("All accounts linked to customer profile will also be removed, are you sure?", function (result) {
+                           if (result) {
+                               $.ajax({
+                                   url: "/api/customers/" + button.attr("data-student-id"),
+                                   method: "Delete",
+                                   success: function () {
+                                       table.row(button.parents("tr")).remove().draw();
+                                   }
+                               });
+                           }
+                       });
+                   }
+               })
+              
+           })
+
+        });
+    </script>
+}

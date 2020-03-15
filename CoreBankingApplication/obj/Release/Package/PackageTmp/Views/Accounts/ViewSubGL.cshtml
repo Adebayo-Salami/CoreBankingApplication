@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CoreBankingApplication.Core.Models.SubCategory>
+
+@{
+    ViewBag.Title = "ViewSubGL";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2 style="text-align:center; font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-size:xx-large">View GL Categories</h2>
+
+<p>
+    @Html.ActionLink("Create New GL Category", "CreateSubCategory")
+</p>
+<table id="subCategory" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Main Category</td>
+            <td>@Html.DisplayNameFor(model => model.categoryName)</td>
+            <td>@Html.DisplayNameFor(model => model.accountDescription)</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.glCategory.type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.categoryName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.accountDescription)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditSubL", new { id = item.id })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            $("#subCategory").DataTable();
+
+        });
+    </script>
+}

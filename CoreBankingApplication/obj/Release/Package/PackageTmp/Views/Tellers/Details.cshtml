@@ -1,0 +1,47 @@
+﻿@model CoreBankingApplication.Core.Models.TellerDetails
+
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+
+<div>
+    <h2>Teller Details</h2>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tellerUsername)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tellerUsername)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tillAccountNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tillAccountNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tillBalance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tillBalance)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Credit Till Balance", "EditTill", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,75 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "CreateProfile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Error"] != null)
+{
+    <span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+<h2>Create Customer Profile</h2>
+
+@using (Html.BeginForm("CreateProfilee", "Customers", new {id = Model.Customer.id }))
+{
+    @Html.ValidationSummary(true, "Pls ensure you fill in correct details.")
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.customerName)
+        @Html.TextBoxFor(m => m.Customer.customerName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.customerName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.customerPhone)
+        @Html.TextBoxFor(m => m.Customer.customerPhone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.customerPhone)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.customerEmail)
+        @Html.TextBoxFor(m => m.Customer.customerEmail, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.customerEmail)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.customerGender)
+        @Html.DropDownListFor(m => m.Customer.customerGender, new SelectList(Model.status, "gender", "gender"), "Select Gender", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.customerGender)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.customerNationalId)
+        @Html.TextBoxFor(m => m.Customer.customerNationalId, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.customerNationalId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.customerVoterId)
+        @Html.TextBoxFor(m => m.Customer.customerVoterId, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.customerVoterId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.customerElectricityId)
+        @Html.TextBoxFor(m => m.Customer.customerElectricityId, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.customerElectricityId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Customer.customerLocation)
+        @Html.TextAreaFor(m => m.Customer.customerLocation, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Customer.customerLocation)
+    </div>
+    @Html.HiddenFor(m => m.Customer.id)
+    @Html.AntiForgeryToken()
+    <button type="submit" class="btn btn-primary">SAVE</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

@@ -1,0 +1,87 @@
+﻿ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Salami CBA</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Salami CBA", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                @if (Session["role"] == null)
+                {
+                    Session["role"] = String.Empty;
+                }
+                <ul class="nav navbar-nav">
+                    @if (Session["role"].ToString() == "admin")
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Accounts Management<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("View GL Accounts", "Index", "Accounts")</li>
+                                <li>@Html.ActionLink("Create New GL Account", "CreateGLAccount", "Accounts")</li>
+                                <li>@Html.ActionLink(" Create New GL Category", "CreateSubCategory", "Accounts")</li>
+                                <li>@Html.ActionLink("View Available GL Categories", "ViewSubGL", "Accounts")</li>
+                                <li>@Html.ActionLink("Generate New Till Account", "generateTill", "Users")</li>
+                                <li>@Html.ActionLink("View all Till Accounts", "tills", "Accounts")</li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Users Management<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("View all Users", "Index", "Users")</li>
+                                <li>@Html.ActionLink("Create A User Account", "Register", "Account")</li>
+                                <li>@Html.ActionLink("View List of Tellers", "tellher", "Users")</li>
+                                <li>@Html.ActionLink("Assign Till Account", "assignT", "Users")</li>
+                                <li>@Html.ActionLink("Add New Branch", "brancher", "Users")</li>
+                                <li>@Html.ActionLink("View all branches", "viewBranches", "Users")</li>
+                            </ul>
+                        </li>
+                    }
+
+                    @if (Session["role"].ToString() == "admin" || Session["role"].ToString() == "Teller")
+                    {
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Customers Management<b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li>@Html.ActionLink("View all Customers", "Index", "Customers")</li>
+                                <li>@Html.ActionLink("Create New Customer Profile", "CreateProfile", "Customers")</li>
+                                <li>@Html.ActionLink("View Customers Accounts", "CustomerAccounts", "Customers")</li>
+                                <li>@Html.ActionLink("Assign Account To Customer", "assignAccount", "Customers")</li>
+                                <li>@Html.ActionLink("View Closed Accounts", "viewClosed", "Customers")</li>
+                                <li>@Html.ActionLink("Set Account Type Configurations", "setAcctConfig", "Customers")</li>
+                            </ul>
+                        </li>
+                        <li>@Html.ActionLink("Post Transactions", "Index", "Transact")</li>
+                    }
+
+                </ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - Salami CBA</p>
+        </footer>
+    </div>
+
+    @Scripts.Render("~/bundles/lib")
+    @RenderSection("scripts", required: false)
+    @RenderSection("scipts", required: false)
+</body>
+</html>

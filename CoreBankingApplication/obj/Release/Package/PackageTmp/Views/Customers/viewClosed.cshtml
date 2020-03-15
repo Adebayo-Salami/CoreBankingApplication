@@ -1,0 +1,85 @@
+﻿@model IEnumerable<CoreBankingApplication.Core.Models.CloseAcct>
+
+@{
+    ViewBag.Title = "viewClosed";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Error"] != null)
+{
+    <span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2 style=" text-align:center">Closed Accounts</h2><br />
+
+<table id="viewC" class="table table-bordered table-hove">
+    <thead>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.accountName)</td>
+            <td>@Html.DisplayNameFor(model => model.customerAccountNumber)</td>
+            <td>@Html.DisplayNameFor(model => model.customerAccountType)</td>           
+            <td>@Html.DisplayNameFor(model => model.accountBalance)</td>
+            <td>@Html.DisplayNameFor(model => model.dateCreated)</td>
+            <td>@Html.DisplayNameFor(model => model.branchCreated)</td>
+            <td>Available Operations</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.accountName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.customerAccountNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.customerAccountType)
+                </td>             
+                <td>
+                    @Html.DisplayFor(modelItem => item.accountBalance)
+                    @Html.DisplayFor(modelItem => item.balanceStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dateCreated)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.branchCreated)
+                </td>
+                <td>
+                    @Html.ActionLink("View", "viewClosedAcct", new { id = item.id }) |
+                    @Html.ActionLink("Open Account", "openAcct", new { id = item.id }) |
+                    <button data-student-id="@item.id" class="btn btn-link js-delete">Delete</button>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+           var table = $("#viewC").DataTable();
+
+            $("#viewC .js-delete").on("click", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this customer account?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/closedaccounts/" + button.attr("data-student-id"),
+                            method: "Delete",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            })
+        });
+    </script>
+}

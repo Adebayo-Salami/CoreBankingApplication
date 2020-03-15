@@ -1,0 +1,84 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "glPostingsLog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>View GL Postings</h2>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>GL Sending</td>
+            <td>Account Code</td>
+            <td>Amount to Debit</td>
+            <td>GL Receiving</td>
+            <td>Account Code</td>
+            <td>Amount to Credit</td>
+            <td>Narration</td>
+            <td>Date of transaction</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.fundGLT)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.glSending)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.glSendingAccountCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amountDebit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.glReceiving)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.glReceivingAccountCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amountCredit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.narration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+            </tr>
+        }
+        @foreach (var item in Model.postGLT)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.glSending)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.glSendingAccountCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amountDebit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.glReceiving)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.glReceivingAccountCode)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amountCredit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.narration)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.dateOfTransaction)
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,53 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "LoanInc";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Loan Income Log</h2>
+
+@if (!Model.loan.Any())
+{
+    <p>No Record In Database Yet!</p>
+}
+else
+{
+    <table id="loanLog" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td>Loan Account Name</td>
+                <td>Loan Account Number</td>
+                <td>Loan Duration(months)</td>
+                <td>Amount Loaned</td>
+                <td>Loan Interest rate</td>
+                <td>Income From Loan</td>
+                <td>Date Loan taken</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.loan)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.acctNo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.duration)</td>
+                    <td>@Html.DisplayFor(modelItem => item.amountBorrowed)</td>
+                    <td>@Html.DisplayFor(modelItem => item.rate)</td>
+                    <td>@Html.DisplayFor(modelItem => item.incomeG)</td>
+                    <td>@Html.DisplayFor(modelItem => item.date)</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            $("#loanLog").DataTable();
+
+        });
+    </script>
+}

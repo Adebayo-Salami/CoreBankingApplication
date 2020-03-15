@@ -1,0 +1,75 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "GLDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GL Account Details</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountIndex.accountName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountIndex.accountName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountIndex.accountBranch)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountIndex.accountBranch)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountIndex.SubCategoryid)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.subCategoryName)
+        </dd>
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountIndex.dateCreated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountIndex.dateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountIndex.accountCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountIndex.accountCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountIndex.amountInAcct)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountIndex.amountInAcct)
+            @Html.DisplayFor(model => model.AccountIndex.amountStatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AccountIndex.accountDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AccountIndex.accountDescription)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

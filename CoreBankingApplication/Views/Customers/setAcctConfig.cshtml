@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CoreBankingApplication.Core.Models.AccountTypeConfig>
+
+@{
+    ViewBag.Title = "setAcctConfig";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2>Account Type Management</h2>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.accountType)</td>
+            <td>@Html.DisplayNameFor(model => model.interestRate)</td>
+            <td>@Html.DisplayNameFor(model => model.lien)</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.accountType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.interestRate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.lien)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit Configuration", "editConfig", new { id = item.id }) |
+                    @Html.ActionLink("Set To All Account with Account Type", "setConfig", new { id = item.id })
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>

@@ -1,0 +1,55 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "postWithdraw";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Error"] != null)
+{
+    <span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+<h2 style="text-align:center">Post Customer Withdrawals</h2>
+
+@using (Html.BeginForm("Withdraw", "Transact"))
+{
+    @Html.ValidationSummary(true, "Pls ensure you fill in correct details.")
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PostWithdrawal.accountNumber)
+        @Html.TextBoxFor(m => m.PostWithdrawal.accountNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PostWithdrawal.accountNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PostWithdrawal.accountType)
+        @Html.DropDownListFor(m => m.PostWithdrawal.accountType, new SelectList(Model.selectAccountT, "accountName", "accountName"), "Select Customer Account Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PostWithdrawal.accountType)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PostWithdrawal.amountW)
+        @Html.TextBoxFor(m => m.PostWithdrawal.amountW, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PostWithdrawal.amountW)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PostWithdrawal.transactionDescription)
+        @Html.TextAreaFor(m => m.PostWithdrawal.transactionDescription, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PostWithdrawal.transactionDescription)
+    </div>
+
+    @Html.HiddenFor(m => m.PostWithdrawal.id)
+    @Html.AntiForgeryToken()
+    <br />
+    <button type="submit" class="btn btn-primary">POST TRANSACTION</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+

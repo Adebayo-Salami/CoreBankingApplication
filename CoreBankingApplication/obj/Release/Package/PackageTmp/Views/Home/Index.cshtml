@@ -1,0 +1,33 @@
+﻿
+
+@{
+    ViewBag.Title = "Home Page";
+}
+@if (Session["fullname"] != null)
+{
+    <h4>Welcome @Session["fullname"]!</h4>
+    <h5>User Role:  <b>@Session["role"]</b></h5>
+    if(Session["role"].ToString() == "Teller")
+    {
+        <h5>Till Current Balance: <b>@Session["tillBal"]</b></h5>
+    }
+}
+
+<div class="jumbotron">
+    <h1 style="text-align:center">Phoenix Bank</h1>
+    <h2>Salami CBA</h2>
+    <p class="lead">Salami Core Banking Application is a web application created to help automate and ease the operations carried out behind the scene at banks, with this, you are able to perform banking operations easier.</p>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <p>
+            <img style="position:center"  src="~/Images/cire.jpg"  />
+        </p>
+    </div>
+</div>
+<div class="row">
+    <div>
+    <p class="lead">Salami CBA was created by a young talented fresh Graduate as a project for successful completion of the training at Appzone learning academy and employment. Salami CBA helps change the way banking operations are carried out at banks and automate the activies performed at the bank</p>
+    </div>
+</div>

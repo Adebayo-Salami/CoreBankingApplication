@@ -1,0 +1,67 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "postRepaymentayA";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Error"] != null)
+{
+    <span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+<h2 style=" text-align:center">Post Customer's Loan Payment</h2>
+
+<h3>Payment With Customer Account</h3>
+@using (Html.BeginForm("loanPayA", "Transact"))
+{
+    @Html.ValidationSummary(true, "Pls ensure you fill in correct details.")
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.loanPayment.accountNumber)
+        @Html.TextBoxFor(m => m.loanPayment.accountNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.loanPayment.accountNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.loanPayment.accountType)
+        @Html.DropDownListFor(m => m.loanPayment.accountType, new SelectList(Model.selectAccountT, "accountName", "accountName"), "Select Customer Account Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.loanPayment.accountType)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.loanPayment.customerAccountNumber)
+        @Html.TextBoxFor(m => m.loanPayment.customerAccountNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.loanPayment.customerAccountNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.loanPayment.amountP)
+        @Html.TextBoxFor(m => m.loanPayment.amountP, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.loanPayment.amountP)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.loanPayment.tillAccount)
+        @Html.TextBoxFor(m => m.loanPayment.tillAccount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.loanPayment.tillAccount)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.loanPayment.transactionDescription)
+        @Html.TextAreaFor(m => m.loanPayment.transactionDescription, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.loanPayment.transactionDescription)
+    </div>
+
+    @Html.HiddenFor(m => m.loanPayment.id)
+    @Html.AntiForgeryToken()
+    <br />
+    <button type="submit" class="btn btn-primary">POST TRANSACTION</button>
+}
+
+<p>@Html.ActionLink("Click To Pay With Cash", "postRepayment")</p>
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

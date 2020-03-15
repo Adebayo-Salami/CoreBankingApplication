@@ -1,0 +1,107 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "AcctLog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.acctIndexN Transaction Log</h2>
+@if (!Model.withT.Any() && !Model.depoT.Any())
+{
+    <p>No Record In Database Yet!</p>
+}
+else
+{
+    <table id="indexLog" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td>Account Entry</td>
+                <td>Corresponding Entry</td>
+                <td>Entry Account Number</td>
+                <td>Amount</td>
+                <td>Transaction Description</td>
+                <td>Date of Transaction</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.withT)
+            {
+                if (item.accountToCredit == Model.acctIndexN)
+                {
+                    <tr>
+                        <td>DEBIT</td>
+                        <td>@Html.DisplayFor(modelItem => item.accountType)</td>
+                        <td>@Html.DisplayFor(modelItem => item.accountNumber)</td>
+                        <td>@Html.DisplayFor(modelItem => item.amountW)</td>
+                        <td>@Html.DisplayFor(modelItem => item.transactionDescription)</td>
+                        <td>@Html.DisplayFor(modelItem => item.date)</td>
+                    </tr>
+                }
+            }
+            @foreach (var item in Model.depoT)
+            {
+                if (item.accountToCredit == Model.acctIndexN)
+                {
+                    <tr>
+                        <td>CREDIT</td>
+                        <td>@Html.DisplayFor(modelItem => item.accountType)</td>
+                        <td>@Html.DisplayFor(modelItem => item.accountNumber)</td>
+                        <td>@Html.DisplayFor(modelItem => item.amountD)</td>
+                        <td>@Html.DisplayFor(modelItem => item.transactionDescription)</td>
+                        <td>@Html.DisplayFor(modelItem => item.date)</td>
+                    </tr>
+                }
+            }
+            @foreach (var item in Model.loanT)
+            {
+                if (item.accountToCredit == Model.acctIndexN)
+                {
+                    <tr>
+                        <td>DEBIT</td>
+                        <td>@Html.DisplayFor(modelItem => item.accountType)</td>
+                        <td>@Html.DisplayFor(modelItem => item.accountNumber)</td>
+                        <td>@Html.DisplayFor(modelItem => item.amountP)</td>
+                        <td>@Html.DisplayFor(modelItem => item.transactionDescription)</td>
+                        <td>@Html.DisplayFor(modelItem => item.date)</td>
+                    </tr>
+                }
+            }
+            @foreach (var item in Model.postGLT)
+            {
+                if (item.glReceiving == Model.acctIndexN)
+                {
+                    <tr>
+                        <td>CREDIT</td>
+                        <td>@Html.DisplayFor(modelItem => item.glSending)</td>
+                        <td>-</td>
+                        <td>@Html.DisplayFor(modelItem => item.amountCredit)</td>
+                        <td>@Html.DisplayFor(modelItem => item.narration)</td>
+                        <td>@Html.DisplayFor(modelItem => item.dateOfTransaction)</td>
+                    </tr>
+                }
+                if (item.glSending == Model.acctIndexN)
+                {
+                    <tr>
+                        <td>DEBIT</td>
+                        <td>@Html.DisplayFor(modelItem => item.glReceiving)</td>
+                        <td>-</td>
+                        <td>@Html.DisplayFor(modelItem => item.amountCredit)</td>
+                        <td>@Html.DisplayFor(modelItem => item.narration)</td>
+                        <td>@Html.DisplayFor(modelItem => item.dateOfTransaction)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            $("#indexLog").DataTable();
+
+        });
+    </script>
+}
+

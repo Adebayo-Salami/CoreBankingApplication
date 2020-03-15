@@ -1,0 +1,47 @@
+﻿@model IEnumerable<CoreBankingApplication.Core.Models.branchDB>
+
+@{
+    ViewBag.Title = "viewBranches";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2>View Available Branches</h2>
+
+<p>
+    @Html.ActionLink("Add New Branch", "brancher", "Users")
+</p>
+<table id="viewBranch" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.branchName)</td>
+            <td>@Html.DisplayNameFor(model => model.branchLoc)</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.branchName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.branchLoc)
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            $("#viewBranch").DataTable();
+
+        });
+    </script>
+}

@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CoreBankingApplication.Core.Models.loanPayment>
+
+@{
+    ViewBag.Title = "postRepaymentLog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:center">Loan Payments Log</h2>
+
+<table id="doc" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.accountNumber)</td>
+            <td>@Html.DisplayNameFor(model => model.accountType)</td>
+            <td>Amount Paid</td>
+            <td>@Html.DisplayNameFor(model => model.transactionDescription)</td>
+            <td>@Html.DisplayNameFor(model => model.tillAccount)</td>
+            <td>@Html.DisplayNameFor(model => model.date)</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.accountNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.accountType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amountP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transactionDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tillAccount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            $("#doc").DataTable();
+
+        });
+    </script>
+}

@@ -1,0 +1,52 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "EOD";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["EOM"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["EOM"]</span>
+}
+<br /><br />
+@if (TempData["Error"] != null)
+{
+    <span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2>EOD PROCESS</h2>
+<br />
+@if (Model.eodStatus == true)
+{
+    <p style=" text-align:right"><b>CURRENT STATUS: OPEN</b></p>
+}
+else
+{
+    <p style=" text-align:right"><b>CURRENT STATUS: CLOSE</b></p>
+}
+
+<br />
+
+<h4>SELECT WHICH EOD OPERATION TO PERFORM</h4>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Operation</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Open Business for the day.</td>
+            <td>@Html.ActionLink("Open", "openB", "Transact")</td>
+        </tr>
+        <tr>
+            <td>Close Business for the day.</td>
+            <td>@Html.ActionLink("Close", "closeB", "Transact")</td>
+        </tr>
+    </tbody>
+</table>
+

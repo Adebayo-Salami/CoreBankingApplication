@@ -1,0 +1,72 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "BankLog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.acctIndexN Log</h2>
+
+@if(!Model.Blog.Any())
+{
+    <p>No Record In Database Yet!</p>
+}
+else
+{
+    <table id="banktLog" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td>Account Entry</td>
+                <td>Corresponding Entry</td>
+                <td>Amount</td>
+                <td>Transaction Description</td>
+                <td>Date of Transaction</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Blog)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.acctEntry)</td>
+                    <td>@Html.DisplayFor(modelItem => item.correspondEntry)</td>
+                    <td>@Html.DisplayFor(modelItem => item.amt)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Entrydesc)</td>
+                    <td>@Html.DisplayFor(modelItem => item.dateTr)</td>
+                </tr>
+            }
+            @foreach (var item in Model.postGLT)
+            {
+                if (item.glReceiving == Model.acctIndexN)
+                {
+                    <tr>
+                        <td>CREDIT)</td>
+                        <td>@Html.DisplayFor(modelItem => item.glSending)</td>
+                        <td>@Html.DisplayFor(modelItem => item.amountCredit)</td>
+                        <td>@Html.DisplayFor(modelItem => item.narration)</td>
+                        <td>@Html.DisplayFor(modelItem => item.dateOfTransaction)</td>
+                    </tr>
+                }
+                if (item.glSending == Model.acctIndexN)
+                {
+                    <tr>
+                        <td>DEBIT</td>
+                        <td>@Html.DisplayFor(modelItem => item.glReceiving)</td>
+                        <td>@Html.DisplayFor(modelItem => item.amountCredit)</td>
+                        <td>@Html.DisplayFor(modelItem => item.narration)</td>
+                        <td>@Html.DisplayFor(modelItem => item.dateOfTransaction)</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            $("#banktLog").DataTable();
+
+        });
+    </script>
+}

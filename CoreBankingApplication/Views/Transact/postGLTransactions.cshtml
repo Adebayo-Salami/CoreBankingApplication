@@ -1,0 +1,74 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "postGLTransactions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if(TempData["Error"] != null)
+{
+<span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2>Post Transactions into GLs</h2>
+
+@using (Html.BeginForm("saveGLPosting", "Transact")) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.PostGLTransactions.glSending, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.PostGLTransactions.glSending, new SelectList(Model.AccountT, "accountName", "accountName"), "Select a GL Account", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PostGLTransactions.glSending, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PostGLTransactions.amountDebit, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PostGLTransactions.amountDebit, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PostGLTransactions.amountDebit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PostGLTransactions.glReceiving, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => m.PostGLTransactions.glReceiving, new SelectList(Model.AccountT, "accountName", "accountName"), "Select a GL Account", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.PostGLTransactions.glReceiving, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PostGLTransactions.amountCredit, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.PostGLTransactions.amountCredit, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PostGLTransactions.amountCredit, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.PostGLTransactions.narration, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.PostGLTransactions.narration, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.PostGLTransactions.narration, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="POST" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")|@Html.ActionLink("Fund Capital GL Account", "fundCapitalGL")
+</div>

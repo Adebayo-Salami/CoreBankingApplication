@@ -1,0 +1,63 @@
+﻿@model IEnumerable<CoreBankingApplication.Core.Models.PostWithdrawal>
+
+@{
+    ViewBag.Title = "postWithdrawLog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style=" text-align:center">Withdrawal Log</h2>
+
+<br />
+<table id="doc" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>@Html.DisplayNameFor(model => model.accountNumber)</td>
+            <td>@Html.DisplayNameFor(model => model.accountType)</td>
+            <td>Amount Withdrawed</td>
+            <td>Corresponding Entry</td>
+            <td>@Html.DisplayNameFor(model => model.transactionDescription)</td>
+            <td>Teller's Till</td>
+            <td>@Html.DisplayNameFor(model => model.date)</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.accountNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.accountType)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.amountW)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.accountToCredit)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.transactionDescription)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tillAccount)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.date)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            $("#doc").DataTable();
+
+        });
+    </script>
+}
+
+

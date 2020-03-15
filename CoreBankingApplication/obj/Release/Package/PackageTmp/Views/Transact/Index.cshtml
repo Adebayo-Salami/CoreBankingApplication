@@ -1,0 +1,78 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Error"] != null)
+{
+    <span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2>Post Transactions Lobby</h2>
+<br />
+@if (Model.eodStatus == true)
+{
+    <p style=" text-align:right"><b>CURRENT STATUS: OPEN</b></p>
+}
+else
+{
+    <p style=" text-align:right"><b>CURRENT STATUS: CLOSE</b></p>
+}
+
+<h3>Select the operation you wish to perform:</h3>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td>Available Operations</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Post Customer Withdrawal</td>
+            <td style="text-align:center">@Html.ActionLink("POST", "postWithdraw") | @Html.ActionLink("View Log", "postWithdrawLog")</td>
+        </tr>
+        <tr>
+            <td>Post Customer Deposit</td>
+            <td style="text-align:center">@Html.ActionLink("POST", "postDeposit") | @Html.ActionLink("View Log", "postDepositLog")</td>
+        </tr>
+        <tr>
+            <td>Post Customer Loan Repayment</td>
+            <td style="text-align:center">@Html.ActionLink("POST", "postRepayment") | @Html.ActionLink("View Log", "postRepaymentLog")</td>
+        </tr>
+        @if (Session["role"].ToString() == "admin")
+        {
+            <tr>
+                <td>Post transactions into GLs</td>
+                <td style="text-align:center">@Html.ActionLink("POST", "postGLTransactions") | @Html.ActionLink("View Log", "glPostingsLog")</td>
+            </tr>
+        }
+        <tr>
+            <td>View Bank's Profit and Loss Account</td>
+            <td style="text-align:center">@Html.ActionLink("VIEW", "viewPL")</td>
+        </tr>
+        <tr>
+            <td>View Bank's  Balance Sheet Report</td>
+            <td style="text-align:center">@Html.ActionLink("VIEW", "viewBS")</td>
+        </tr>
+        <tr>
+            <td>View Bank's Trial Balance</td>
+            <td style="text-align:center">@Html.ActionLink("VIEW", "viewTB")</td>
+        </tr>
+        @if (Session["role"].ToString() == "admin")
+        {
+            <tr>
+                <td>End Banking Operations for the day</td>
+                <td style="text-align:center">@Html.ActionLink("EOD PROCESS", "EOD")</td>
+            </tr>
+        }
+            
+    </tbody>
+</table>
+
+   

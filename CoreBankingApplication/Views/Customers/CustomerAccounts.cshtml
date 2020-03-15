@@ -1,0 +1,92 @@
+﻿@model IEnumerable<CoreBankingApplication.Core.Models.CustomerAccounts>
+
+@{
+    ViewBag.Title = "CustomerAccounts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Error"] != null)
+{
+    <span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2>CustomerAccounts</h2>
+
+<p>@Html.ActionLink("Assign New Account", "assignAccount")</p>
+
+
+    <table id="customAc" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td>@Html.DisplayNameFor(model => model.CustomerID)</td>
+                <td>@Html.DisplayNameFor(model => model.accountName)</td>
+                <td>@Html.DisplayNameFor(model => model.customerAccountNumber)</td>
+                <td>@Html.DisplayNameFor(model => model.customerAccountType)</td>
+                <td>@Html.DisplayNameFor(model => model.accountBalance)</td>
+                <td>@Html.DisplayNameFor(model => model.dateCreated)</td>
+                <td>@Html.DisplayNameFor(model => model.branchCreated)</td>
+                <td>Available Operations</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CustomerID)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.accountName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.customerAccountNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.customerAccountType)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.accountBalance)
+                        @Html.DisplayFor(modelItem => item.balanceStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.dateCreated)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.branchCreated)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Account Details", "AcctDetails", new { id = item.id }) |
+                        @Html.ActionLink("Edit Account", "editAcct", new { id = item.id }) |
+                        @Html.ActionLink("Close Account", "closeAcct", new { id = item.id }) |
+                        <button data-student-id="@item.id" class="btn btn-link js-delete">Delete Account</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+           var table = $("#customAc").DataTable();
+                   
+            $("#customAc .js-delete").on("click", function () {
+                var button = $(this);
+                bootbox.confirm("Are you sure you want to delete this customer account?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/customeraccounts/" + button.attr("data-student-id"),
+                            method: "Delete",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+            })
+        });
+    </script>
+}

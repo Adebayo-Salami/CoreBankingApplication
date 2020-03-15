@@ -1,0 +1,146 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "viewTB";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:center">Phoenix Trial Balance as at @DateTime.Now.DayOfWeek/@DateTime.Now.Month/@DateTime.Now.Year</h2>
+<br />
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td></td>
+            <td style="text-align:right"><b>Debit(Naira)</b></td>
+            <td style="text-align:right"><b>Credit(Naira)</b></td>
+    </thead>
+    <tbody>
+        @if (Model.balanceFig == -1)
+        {
+            <tr>
+                <td>Cash and Bank Balances</td>
+                <td style="text-align:right">( @Model.negativeFig )</td>
+                <td style="text-align:right">0</td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td>Cash and Bank Balances</td>
+                <td style="text-align:right">@Model.balanceFig</td>
+                <td style="text-align:right">0</td>
+            </tr>
+        }
+        @foreach (var item in Model.AccountT)
+        {
+            if (item.mainGLCategory == 1)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td style="text-align:right">@Html.DisplayFor(modelItem => item.amountInAcct)</td>
+                    <td style="text-align:right">0</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td><b>TOTAL ASSETS:</b></td>
+            <td style="text-align:right"><b>@Model.assetB</b></td>
+            <td style="text-align:right"><b>0</b></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.AccountT)
+        {
+            if (item.mainGLCategory == 2)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td style="text-align:right">@Html.DisplayFor(modelItem => item.amountInAcct)</td>
+                    <td style="text-align:right">0</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td><b>TOTAL LIABILITIES:</b></td>
+            <td style="text-align:right"><b>@Model.liabilityB</b></td>
+            <td style="text-align:right"><b>0</b></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.AccountT)
+        {
+            if (item.mainGLCategory == 3)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td style="text-align:right">0</td>
+                    <td style="text-align:right">@Html.DisplayFor(modelItem => item.amountInAcct)</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td><b>TOTAL CAPITALS:</b></td>
+            <td style="text-align:right"><b>0</b></td>
+            <td style="text-align:right"><b>@Model.capitalBal</b></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.AccountT)
+        {
+            if (item.mainGLCategory == 4)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td style="text-align:right">0</td>
+                    <td style="text-align:right">@Html.DisplayFor(modelItem => item.amountInAcct)</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td><b>TOTAL INCOMES:</b></td>
+            <td style="text-align:right"><b>0</b></td>
+            <td style="text-align:right"><b>@Model.incBal</b></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.AccountT)
+        {
+            if (item.mainGLCategory == 5)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td style="text-align:right">0</td>
+                    <td style="text-align:right">@Html.DisplayFor(modelItem => item.amountInAcct)</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td><b>TOTAL EXPENSES:</b></td>
+            <td style="text-align:right"><b>0</b></td>
+            <td style="text-align:right"><b>@Model.expenseB</b></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td style="text-align:right"><b>____________________________________</b></td>
+            <td style="text-align:right"><b>____________________________________</b></td>
+        </tr>
+        <tr>
+            <td><b>TOTAL:</b></td>
+            <td style="text-align:right"><b>@Model.debit</b></td>
+            <td style="text-align:right"><b>@Model.credit</b></td>
+        </tr>
+    </tbody>
+</table>

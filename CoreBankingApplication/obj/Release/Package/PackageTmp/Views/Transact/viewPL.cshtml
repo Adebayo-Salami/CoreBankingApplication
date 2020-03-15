@@ -1,0 +1,94 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "viewPL";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 style="text-align:center">Phoenix Bank Profit And Loss Account as at @DateTime.Now.DayOfWeek/@DateTime.Now.Month/@DateTime.Now.Year</h2>
+<br />
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td></td>
+            <td>Naira</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><b>INCOME</b></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.AccountT)
+        {
+            if (item.mainGLCategory == 4)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.amountInAcct)</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td><b>TOTAL INCOME:</b></td>
+            <td><b>@Model.incomeB</b></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr>
+            <td><b>EXPENSES</b></td>
+            <td></td>
+        </tr>
+        @foreach (var item in Model.AccountT)
+        {
+            if (item.mainGLCategory == 5)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.accountName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.amountInAcct)</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td><b>TOTAL EXPENSES:</b></td>
+            <td><b>@Model.expenseB</b></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+        </tr>
+        @if (Model.PLBal == -1)
+        {
+            <tr>
+                <td><b>PROFIT/LOSS:</b></td>
+                <td>(<b>@Model.PLMinusBal</b>)</td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td><b>PROFIT/LOSS:</b></td>
+                <td><b>@Model.PLBal</b></td>
+            </tr>
+        }
+    </tbody>
+</table>
+@if (Model.PLBal < 0)
+{
+    <p><b>Bank is running at a loss of @Model.PLMinusBal.</b></p>
+}
+else if(Model.PLBal > 0)
+{
+    <p><b>Bank is running at a profit of @Model.PLBal .</b></p>
+}
+else
+{
+    <p><b>Bank is running at neither profit or loss.</b></p>
+}
+

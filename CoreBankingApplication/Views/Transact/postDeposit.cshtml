@@ -1,0 +1,53 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "postDeposit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Error"] != null)
+{
+    <span class="label label-danger" style="font-size:large"> @TempData["Error"]</span>
+}
+<h2 style="text-align:center">Post Customer Deposit</h2>
+
+
+@using (Html.BeginForm("Deposit", "Transact"))
+{
+    @Html.ValidationSummary(true, "Pls ensure you fill in correct details.")
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PostDeposit.accountNumber)
+        @Html.TextBoxFor(m => m.PostDeposit.accountNumber,new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PostDeposit.accountNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PostDeposit.accountType)
+        @Html.DropDownListFor(m => m.PostDeposit.accountType, new SelectList(Model.selectAccountT, "accountName", "accountName"), "Select Customer Account Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PostDeposit.accountType)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PostDeposit.amountD)
+        @Html.TextBoxFor(m => m.PostDeposit.amountD, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PostDeposit.amountD)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.PostDeposit.transactionDescription)
+        @Html.TextAreaFor(m => m.PostDeposit.transactionDescription, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.PostDeposit.transactionDescription)
+    </div>
+
+    @Html.HiddenFor(m => m.PostWithdrawal.id)
+    @Html.AntiForgeryToken()
+    <br />
+    <button type="submit" class="btn btn-primary">POST TRANSACTION</button>
+}
+
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

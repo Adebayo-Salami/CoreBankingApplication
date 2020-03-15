@@ -1,0 +1,82 @@
+﻿@model CoreBankingApplication.Data.AccIndexer
+
+@{
+    ViewBag.Title = "CashAssetsLog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (TempData["Success"] != null)
+{
+    <span class="label label-success" style="font-size:medium"> @TempData["Success"]</span>
+}
+<h2>Phoenix Till Accounts</h2>
+<p style="text-align:right">
+    @Html.ActionLink("Generate New Till Account", "generateTill", "Users")
+</p>
+
+@if (!Model.tellerT.Any())
+{
+    <p>No Record In Database Yet!</p>
+}
+else
+{
+    <table id="cashAsset" class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td>Account Entry</td>
+                <td>Amount</td>
+                <td>Transaction Description</td>
+                <td>Date of Transaction</td>
+                <td>Owner Account Number</td>
+                <td>Owner Account Type</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.tellerT)
+                {
+                <tr>
+                    <td>Credit</td>
+                    <td>@Html.DisplayFor(modelItem => item.tillBalance)</td>
+                    <td>Amount Tranferred to till Account</td>
+                    <td>-</td>
+                    <td>@Html.DisplayFor(modelItem => item.tillAccountNumber) (@Html.DisplayFor(modelItem => item.tellerUsername))</td>
+                    <td>Till Account</td>
+                </tr>
+            }
+            @foreach (var item in Model.postGLT)
+            {
+                if (item.glReceiving == Model.acctIndexN)
+                {
+                    <tr>
+                        <td>CREDIT</td>
+                        <td>@Html.DisplayFor(modelItem => item.amountCredit)</td>
+                        <td>@Html.DisplayFor(modelItem => item.narration)</td>
+                        <td>@Html.DisplayFor(modelItem => item.dateOfTransaction)</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                }
+                if (item.glSending == Model.acctIndexN)
+                {
+                    <tr>
+                        <td>DEBIT</td>
+                        <td>@Html.DisplayFor(modelItem => item.amountCredit)</td>
+                        <td>@Html.DisplayFor(modelItem => item.narration)</td>
+                        <td>@Html.DisplayFor(modelItem => item.dateOfTransaction)</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+}
+
+@section scipts
+{
+    <script>
+        $(document).ready(function () {
+            $("#cashAsset").DataTable();
+
+        });
+    </script>
+}
